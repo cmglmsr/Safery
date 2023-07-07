@@ -1,16 +1,29 @@
 package app.safery.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import app.safery.models.Member;
+import app.safery.services.MemberService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/")
 public class RootController {
 
+    private final MemberService memberService;
+
+    public RootController(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
     @GetMapping
-    public String welcomeMessage() {
-        return "Welcome to Safery!";
+    public List<Member> welcomeMessage() {
+        return memberService.findAll();
+    }
+
+    @PostMapping()
+    public void addMember(@RequestBody Member member) {
+        memberService.save(member);
     }
 
 }
