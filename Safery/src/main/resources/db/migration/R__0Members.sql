@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS Member(
     name VARCHAR(50),
     surname VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    password VARCHAR(50) NOT NULL
+    password VARCHAR(50) NOT NULL,
+    role VARCHAR(50) NOT NULL
 );
