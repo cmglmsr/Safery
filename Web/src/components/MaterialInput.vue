@@ -51,7 +51,7 @@ defineProps({
   icon: {
     type: String,
     default: "",
-  },
+  }
 });
 function getClasses(size, success, error) {
   let sizeValue, isValidValue;
@@ -86,6 +86,17 @@ function getClasses(size, success, error) {
       :placeholder="placeholder"
       :isRequired="isRequired"
       :disabled="isDisabled"
+      @input="inputChange"
     />
   </div>
 </template>
+<script>
+export default {
+  emits: ['input', 'update:value'],
+  methods: {
+    inputChange(event) {
+      this.$emit("update:value", event.target.value)
+    },
+  }
+}
+</script>

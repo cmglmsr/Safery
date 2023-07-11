@@ -1,18 +1,14 @@
 <script setup>
 import { onMounted } from "vue";
 
-
 import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 import Header from "@/examples/Header.vue";
-import MaterialInput from "@/components/MaterialInput.vue";
 import MaterialSwitch from "@/components/MaterialSwitch.vue";
-import MaterialButton from "@/components/MaterialButton.vue";
 
 import setMaterialInput from "@/assets/js/material-input";
 onMounted(() => {
   setMaterialInput();
 });
-
 </script>
 <template>
   <DefaultNavbar transparent />
@@ -21,7 +17,7 @@ onMounted(() => {
       class="page-header align-items-start min-vh-100"
       :style="{
         backgroundImage:
-          'url(https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80)'
+          'url(https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80)',
       }"
       loading="lazy"
     >
@@ -61,16 +57,18 @@ onMounted(() => {
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form @submit.prevent="login" role="form" class="text-start">
                   <MaterialInput
                     id="email"
                     class="input-group-outline my-3"
+                    v-model:value="email"
                     :label="{ text: 'Email', class: 'form-label' }"
                     type="email"
                   />
                   <MaterialInput
                     id="password"
                     class="input-group-outline mb-3"
+                    v-model:value="password"
                     :label="{ text: 'Password', class: 'form-label' }"
                     type="password"
                   />
@@ -81,7 +79,6 @@ onMounted(() => {
                     checked
                     >Remember me</MaterialSwitch
                   >
-
                   <div class="text-center">
                     <MaterialButton
                       class="my-4 mb-2"
@@ -169,36 +166,46 @@ onMounted(() => {
 </template>
 <script>
 import axios from "axios";
+import MaterialButton from "@/components/MaterialButton.vue";
+import MaterialInput from "@/components/MaterialInput.vue";
+
+const body = document.getElementsByTagName("body")[0];
+
 export default {
   name: "SigninPage",
+  components: {
+    MaterialInput,
+    MaterialButton,
+  },
   data() {
     return {
-      username: "",
-      password: "",
-    }
+      email: '',
+      password: '',
+    };
+  },
+  beforeMount() {
+    body.classList.remove("bg-gray-100");
+  },
+  beforeUnmount() {
+    body.classList.add("bg-gray-100");
   },
   methods: {
     async login(e) {
       e.preventDefault();
       try {
-        const response = await axios.post(`http://${window.location.hostname}:8080/api/auth`, {
-          username:this.username,
-          password:this.password,
-        });
-        if(response.data?.token) {
-          window.localStorage.setItem("accessToken", `Token ${response.data.token}`);
-          this.$router.push('/dashboard');
-        }
-        if(response.data?.role) {
-          this.$store.state.role = response.data.role;
-        }
-      }
-      catch (error) {
-        this.error = true
+        const response = await axios.post(
+          `http://${window.location.hostname}:8080/api/auth`,
+          {
+            email: this.email,
+            password: this.password,
+          }
+        );
+        console.log(response.data)
+        window.localStorage.setItem("bearer", response.data);
+      } catch (error) {
+        this.error = true;
       }
     },
-  }
-
-
-}
+  },
+};
 </script>

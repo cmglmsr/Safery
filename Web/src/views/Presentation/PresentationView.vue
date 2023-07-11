@@ -28,6 +28,7 @@ import logoVue from "@/assets/img/logos/vue.jpg";
 import logoAngular from "@/assets/img/logos/angular.jpg";
 import logoReact from "@/assets/img/logos/react.jpg";
 import logoSketch from "@/assets/img/logos/sketch.jpg";
+import DefaultNavbar from "@/examples/navbars/NavbarDefault.vue";
 
 //hooks
 const body = document.getElementsByTagName("body")[0];
@@ -42,16 +43,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-      <div class="col-12">
-        <NavbarDefault :sticky="true" />
-      </div>
-    </div>
-  </div>
+  <DefaultNavbar transparent />
   <Header>
     <div
-      class="page-header min-vh-75"
+      class="page-header min-vh-100"
       :style="`background-image: url(${vueMkHeader})`"
       loading="lazy"
     >

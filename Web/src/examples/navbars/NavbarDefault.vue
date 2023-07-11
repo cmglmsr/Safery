@@ -17,7 +17,7 @@ const props = defineProps({
     default: () => ({
       route: "https://www.creative-tim.com/product/vue-material-kit",
       color: "bg-gradient-success",
-      label: "Free Download"
+      label: "Üye Girişi"
     })
   },
   transparent: {
@@ -161,6 +161,25 @@ watch(
         id="navigation"
       >
         <ul class="navbar-nav navbar-nav-hover ms-auto">
+          <li class="nav-item dropdown dropdown-hover mx-2">
+            <a
+              role="button"
+              class="nav-link ps-2 d-flex cursor-pointer align-items-center custom-navbar-links"
+              :class="getTextColor()"
+              id="dropdownMenuPages"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              href="/sign-in"
+              style=""
+            >
+              <i
+                class="material-icons opacity-6 me-2 text-md"
+                :class="getTextColor()"
+              >person</i
+              >
+              Profile
+            </a>
+          </li>
           <li class="nav-item dropdown dropdown-hover mx-2">
             <a
               role="button"

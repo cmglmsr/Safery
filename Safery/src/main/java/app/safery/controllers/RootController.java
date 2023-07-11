@@ -9,6 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("")
+@CrossOrigin(origins = "*")
 public class RootController {
 
     private final MemberService memberService;
@@ -19,16 +20,19 @@ public class RootController {
         this.sessionService = sessionService;
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public List<Member> welcomeMessage() {
         return memberService.findAll();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/profile")
     public Member getProfile() throws Exception {
         return (Member) sessionService.getCurrentUser();
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/")
     public void addMember(@RequestBody Member member) {
         System.out.println(member);
